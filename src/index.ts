@@ -24,9 +24,13 @@ app.get('/:page', (req: any, res: any, next: any) => {
   }
 });
 
+// Redirect root
 app.get('/', (_req: any, res: { redirect: (arg0: string) => void; }) => {
     res.redirect('/index');
 });
+
+//Additional static files
+app.use(express.static(path.join(__dirname, 'public')));
 
 const {verifyService1} = require("./controllers/service1Controller.ts")
 app.use('/uen-validation',verifyService1)

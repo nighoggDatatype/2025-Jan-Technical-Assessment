@@ -1,3 +1,7 @@
 {
     "extends": "@tsconfig/node-lts/tsconfig.json",
+    "exclude": [
+      "./src/frontend",
+      "node_modules"
+    ]
   }

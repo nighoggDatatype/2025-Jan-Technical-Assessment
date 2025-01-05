@@ -7,10 +7,25 @@ const port = 3000
 // Middleware to parse URL-encoded form data
 app.use(express.urlencoded({ extended: true })); 
 
-app.use(express.static(path.join(__dirname, '../public')));
+// Set EJS as the view engine
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
+
+// Middleware to parse the requested URL
+app.get('/:page', (req: any, res: any, next: any) => {
+  const { page } = req.params;
+
+  // Validate the requested page exists in the views folder
+  const htmlTemplates = ['index', 'service1', 'service2']; // List of allowed EJS templates
+  if (htmlTemplates.includes(page)) {
+      res.render(page);
+  } else {
+      next();
+  }
+});
 
 app.get('/', (_req: any, res: { redirect: (arg0: string) => void; }) => {
-    res.redirect('/index.html');
+    res.redirect('/index');
 });
 
 const {verifyService1} = require("./controllers/service1Controller.ts")

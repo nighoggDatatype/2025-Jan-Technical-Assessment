@@ -2,10 +2,11 @@
   "name": "2025-jan-technical-assessment",
   "version": "1.0.0",
   "main": "index.ts",
+  "type": "module",
   "scripts": {
     "build:frontend": "tsc --project src/frontend/tsconfig.json",
-    "test": "echo \"Error: no test specified\" && exit 1"
     "start": "tsc --noEmit && npx tsx src/index.ts",
+    "test": "mocha 'test/**/*.ts'"
   },
   "author": "",
   "license": "ISC",
@@ -18,8 +19,12 @@
   },
   "devDependencies": {
     "@tsconfig/node-lts": "^22.0.1",
+    "@types/chai": "^5.0.1",
     "@types/express": "^5.0.0",
+    "@types/mocha": "^10.0.10",
     "@types/node": "^22.10.5",
+    "chai": "^5.1.2",
+    "mocha": "^11.0.1",
     "ts-node": "^10.9.2",
     "typescript": "^5.7.2"
   }

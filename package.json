@@ -4,8 +4,8 @@
   "main": "index.ts",
   "scripts": {
     "build:frontend": "tsc --project src/frontend/tsconfig.json",
-    "start": "tsc --noEmit src/index.ts && npx tsx src/index.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "tsc --noEmit && npx tsx src/index.ts",
   },
   "author": "",
   "license": "ISC",

@@ -1,6 +1,6 @@
-const path = require("path")
+import path from "path";
 
-const express = require('express')
+import express from 'express';
 const app = express()
 const port = 3000
 
@@ -32,7 +32,7 @@ app.get('/', (_req: any, res: { redirect: (arg0: string) => void; }) => {
 //Additional static files
 app.use(express.static(path.join(__dirname, 'public')));
 
-const {verifyService1} = require("./controllers/service1Controller.ts")
+import { verifyService1 } from "./controllers/service1Controller.js";
 app.use('/uen-validation',verifyService1)
 
 app.listen(port, () => {

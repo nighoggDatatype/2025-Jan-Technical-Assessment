@@ -44,7 +44,7 @@ export const verifyService1 = (req: Request<{}, {}, VerifyUENRequestBody>, res: 
     const { uen } = req.body;
 
     if (!uen || typeof uen !== 'string') {
-        res.status(400).send(`
+        res.send(`
             <div class="alert alert-danger" role="alert">
                 Invalid input provided to the API. Please try again.
             </div>

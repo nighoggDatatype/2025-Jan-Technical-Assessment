@@ -11,18 +11,32 @@ export const isUENValid = (uen: string): boolean => {
     const typeB_year = "(19|20)\\d{2}"
     const typeB = typeB_year + "\\d{5}[A-Z]"
     const typeC_year = "[ST]\\d{2}"
-    const typeC_entityType = "[A-Z][A-Z0-9]"
+    const entityTypeList = [
+        "LP","LL","FC","PF",
+        "RF",
+        "MQ","MM",
+        "NB",
+        "CC",
+        "CS",
+        "MB",
+        "FM",
+        "GS",
+        "DP","CP","NR",
+        "CM","CD","MD","HS","VH","CH","MH","CL","XL","CX","HC",
+        "RP",
+        "TU",
+        "TC",
+        "FB","FN",
+        "PA","PB",
+        "SS",
+        "MC","SM",
+        "GA","GB",
+    ]
+    const typeC_entityType = `(${entityTypeList.join("|")})`
     const typeC = typeC_year + typeC_entityType + "\\d{4}[A-Z]"
     const regexString = `^(${typeA}|${typeB}|${typeC})$`
     const re = new RegExp(regexString);
-    if (!re.test(uen)) {
-        return false;
-    }
-    const providedCheckChar = uen.slice(-1);
-    const uenToValidate = uen.slice(0,-1);
-    const computedCheckChar = "D"//TODO: Replace with something computed from "uenToValidate"
-
-    return computedCheckChar == providedCheckChar;
+    return re.test(uen);
 }
 
 // Controller function to handle verification

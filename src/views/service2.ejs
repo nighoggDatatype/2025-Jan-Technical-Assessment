@@ -25,7 +25,16 @@
           <div class="col-md-4">
             <div class="card-body">
               <h4 class="card-title">Weather Forecast of Singapore</h4>
-              <p class="card-text">Dummy card test here. Replace this with drop down and weather output</p>
+              <select id="location" name="location">
+                <% locations.forEach(location => { %>
+                  <option 
+                    value="<%= location.name %>" 
+                    data-lat="<%= location.label_location.latitude %>" 
+                    data-long="<%= location.label_location.longitude %>">
+                    <%= location.name %>
+                  </option>
+                <% }) %>
+              </select>
             </div>
           </div>
         </div>

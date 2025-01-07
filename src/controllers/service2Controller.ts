@@ -27,3 +27,12 @@ export const getWeatherJson = async (): Promise<null | WeatherData> => {
     }
     return weatherCache
 }
+
+export const getWeatherLocation = async (): Promise<AreaMetadata[]> => {
+    const data = await getWeatherJson()
+    if (data == null) {
+        return [defaultLocation]
+    } else {
+        return data.area_metadata
+    }
+}

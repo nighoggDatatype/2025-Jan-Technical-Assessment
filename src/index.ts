@@ -15,16 +15,21 @@ app.use(express.urlencoded({ extended: true }));
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
+
+import { getWeatherLocation } from "./controllers/service2Controller.js";
+
 // Middleware to parse the requested URL
-app.get('/:page', (req: any, res: any, next: any) => {
+app.get('/:page', async (req: any, res: any, next: any) => {
   const { page } = req.params;
 
   // Validate the requested page exists in the views folder
-  const htmlTemplates = ['index', 'service1', 'service2']; // List of allowed EJS templates
-  if (htmlTemplates.includes(page)) {
-      res.render(page);
+  const simpleTemplates = ['index', 'service1']; // List of allowed EJS templates
+  if (simpleTemplates.includes(page)) {
+    res.render(page);
+  } else if (page == "service2") {
+    res.render(page, {"locations": await getWeatherLocation()})
   } else {
-      next();
+    next();
   }
 });
 

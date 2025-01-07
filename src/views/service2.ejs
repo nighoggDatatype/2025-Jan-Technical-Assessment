@@ -25,7 +25,7 @@
           <div class="col-md-4">
             <div class="card-body">
               <h4 class="card-title">Weather Forecast of Singapore</h4>
-              <select id="location" name="location">
+              <select id="location" name="location" hx-post="/forecast" hx-target="#response-container" hx-swap="innerHTML">
                 <% locations.forEach(location => { %>
                   <option 
                     value="<%= location.name %>" 
@@ -35,11 +35,16 @@
                   </option>
                 <% }) %>
               </select>
+              <div id="response-container">
+                <!-- Response will be injected here -->
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
+    <!-- HTMX script-->
+    <script src="https://unpkg.com/htmx.org@2.0.4" integrity="sha384-HGfztofotfshcF7+8n44JQL2oJmowVChPTg48S+jvZoztPfvwD79OC/LTtG6dMp+" crossorigin="anonymous"></script>
 
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

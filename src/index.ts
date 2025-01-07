@@ -44,6 +44,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 import { verifyService1 } from "./controllers/service1Controller.js";
 app.use('/uen-validation',verifyService1)
 
+import { forecastService2 } from "./controllers/service2Controller.js"
+app.use('/forecast',forecastService2)
+
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 })

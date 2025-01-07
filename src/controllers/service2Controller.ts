@@ -1,4 +1,5 @@
 import { WeatherData, AreaMetadata } from "../interfaces/weatherAPI.js"
+import { Request, Response } from 'express';
 
 const defaultLocation: AreaMetadata = {
     name: "Singapore",
@@ -36,3 +37,47 @@ export const getWeatherLocation = async (): Promise<AreaMetadata[]> => {
         return data.area_metadata
     }
 }
+
+export const getWeatherForecast = async (location: string): Promise<string | null> => {
+    const data = await getWeatherJson()
+    if (data != null) {
+        for (const forecasts of data.items[0].forecasts) {
+            if (forecasts.area == location) {
+                return forecasts.forecast
+            }
+        }
+    }
+    return null
+}
+
+interface GetLocalWeatherBody {
+    location: string;
+}
+
+export const forecastService2 = async (req: Request<{}, {}, GetLocalWeatherBody>, res: Response): Promise<void> => {
+    const { location } = req.body;
+
+    if (!location || typeof location !== 'string') {
+        res.send(`
+            <div class="alert alert-danger" role="alert">
+                Unable to provide forecast
+            </div>
+          `);
+        return;
+    }
+    const forecast = await getWeatherForecast(location)
+    if (forecast == null) {
+        res.send(`
+            <div class="alert alert-danger" role="alert">
+                Unable to provide forecast
+            </div>
+          `);
+        return;
+    } else {
+        res.send(`
+            <div class="alert alert-info" role="alert">
+                Forecast: ${forecast}
+            </div>
+          `);
+    }
+};

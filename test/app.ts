@@ -35,11 +35,11 @@ describe('End to End Testing', function () {
         
         page.locator('input[type="text"]').fill('S99PB0011X');
         page.locator('button').click();
-        expect(await page.locator('.alert').textContent()).to.include("UEN formatting correct")
+        expect(await page.locator('.alert-success').textContent()).to.include("UEN formatting correct")
         
         page.locator('input[type="text"]').fill('123456789');
         page.locator('button').click();
-        expect(await page.locator('.alert').textContent()).to.include("UEN formatting invalid")
+        expect(await page.locator('.alert-danger').textContent()).to.include("UEN formatting invalid")
     });
   })
 });

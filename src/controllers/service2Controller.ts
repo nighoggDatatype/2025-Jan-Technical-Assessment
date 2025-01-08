@@ -1,6 +1,8 @@
 import { WeatherData, AreaMetadata } from "../interfaces/weatherAPI.js"
 import { Request, Response } from 'express';
 
+export const API_URL = "https://api.data.gov.sg/v1/environment/2-hour-weather-forecast"
+
 const defaultLocation: AreaMetadata = {
     name: "Singapore",
     label_location: {
@@ -14,19 +16,16 @@ export const getWeatherJson = async (): Promise<null | WeatherData> => {
     if (
         weatherCache === null ||
         new Date(weatherCache.items[0].valid_period.end) <= new Date()) { // Check if the forecast is outdated
-        const url = "https://api.data.gov.sg/v1/environment/2-hour-weather-forecast";
-        try {
-            const response = await fetch(url);
-            if (!response.ok) {
-                throw new Error(`Response status: ${response.status}`);
-            }
-
-            weatherCache = (await response.json()) as WeatherData;
-        } catch (error: any) {
-            console.error(error.message);
+        const response = await fetch(API_URL);
+        if (!response.ok) {
+            return weatherCache
         }
+        weatherCache = (await response.json()) as WeatherData;
     }
     return weatherCache
+}
+export const flushWeatherCache = () => {
+    weatherCache = null
 }
 
 export const getWeatherLocation = async (): Promise<AreaMetadata[]> => {

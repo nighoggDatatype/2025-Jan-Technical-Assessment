@@ -1,7 +1,7 @@
 import { expect } from "chai";
 import sinon from "sinon";
 import "mocha";
-import { getWeatherJson, flushWeatherCache, getWeatherLocation} from "../src/controllers/service2Controller.js";
+import { getWeatherJson, flushWeatherCache, getWeatherLocation, getWeatherForecast} from "../src/controllers/service2Controller.js";
 
 const defaultMockApiOkJson = {
     "api_info": {
@@ -95,6 +95,26 @@ describe('Service 2', function () {
         })
     })
     describe("(Using live api)", () => {
-        
+        describe('#getWeatherJson()', function () {
+            it("should properly fetch the data, but not too often", async () => {
+                const data = await getWeatherJson()
+                expect(data).to.not.be.null
+            })
+        })
+        describe("#getWeatherLocation", function () {
+            it("Should get the correct list of data with network", async () => {
+                const data = await getWeatherLocation()
+                expect(data).to.not.be.null
+            })
+        })
+        describe("#getWeatherForecast", function () {
+            it("Should get some prediction", async () => {
+                const places = await getWeatherLocation()
+                for (const location of places) {
+                    const data = await getWeatherForecast(location.name)
+                    expect(data).to.not.be.null
+                }
+            })
+        })
     })
 })

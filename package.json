@@ -6,7 +6,7 @@
   "scripts": {
     "build:frontend": "tsc --project src/frontend/tsconfig.json",
     "start": "tsc --noEmit && npx tsx src/index.ts",
-    "test": "mocha 'test/**/*.ts'"
+    "test": "npx playwright install && mocha 'test/**/*.ts'"
   },
   "author": "",
   "license": "ISC",
@@ -26,6 +26,7 @@
     "@types/sinon": "^17.0.3",
     "chai": "^5.1.2",
     "mocha": "^11.0.1",
+    "playwright": "^1.49.1",
     "sinon": "^19.0.2",
     "ts-node": "^10.9.2",
     "typescript": "^5.7.2"

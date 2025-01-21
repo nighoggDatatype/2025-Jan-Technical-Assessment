@@ -1,21 +1,42 @@
-export interface APIInfo {
-    status: "healthy";
-}
+export type  ApiResponse = {
+    code: number;
+    errorMsg: string | null;
+    data: WeatherData;
+};
 
-export interface LabelLocation {
-    longitude: number;
-    latitude: number;
-}
+export type WeatherData = {
+    area_metadata: AreaMetadata[];
+    items: Item[];
+    paginationToken?: string;
+};
 
-export interface AreaMetadata {
+export type AreaMetadata = {
     name: string;
     label_location: LabelLocation;
-}
+};
 
-export interface ValidPeriod {
-    start: string; // ISO 8601 date-time string
-    end: string; // ISO 8601 date-time string
-}
+export type LabelLocation = {
+    latitude: number;
+    longitude: number;
+};
+
+export type Item = {
+    updated_timestamp: string;
+    timestamp: string;
+    valid_period: ValidPeriod;
+    forecasts: Forecast[];
+};
+
+export type ValidPeriod = {
+    start: string;
+    end: string;
+    text: string;
+};
+
+export type Forecast = {
+    area: string;
+    forecast: ForecastType;
+};
 
 export type ForecastType =
       "Fair"
@@ -41,21 +62,3 @@ export type ForecastType =
     | "Thundery Showers"
     | "Heavy Thundery Showers"
     | "Heavy Thundery Showers with Gusty Winds";
-
-export interface Forecast {
-    area: string;
-    forecast: ForecastType;
-}
-
-export interface Item {
-    update_timestamp: string; // ISO 8601 date-time string
-    timestamp: string; // ISO 8601 date-time string
-    valid_period: ValidPeriod;
-    forecasts: Forecast[];
-}
-
-export interface WeatherData {
-    api_info: APIInfo;
-    area_metadata: AreaMetadata[];
-    items: Item[];
-}

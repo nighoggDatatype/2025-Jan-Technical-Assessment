@@ -1,7 +1,7 @@
-import { WeatherData, AreaMetadata } from "../interfaces/weatherAPI.js"
+import { ApiResponse, WeatherData, AreaMetadata } from "../interfaces/weatherAPI.js"
 import { Request, Response } from 'express';
 
-export const API_URL = "https://api.data.gov.sg/v1/environment/2-hour-weather-forecast"
+export const API_URL = "https://api-open.data.gov.sg/v2/real-time/api/two-hr-forecast"
 
 const defaultLocation: AreaMetadata = {
     name: "Singapore",
@@ -20,7 +20,7 @@ export const getWeatherJson = async (): Promise<null | WeatherData> => {
         if (!response.ok) {
             return weatherCache
         }
-        weatherCache = (await response.json()) as WeatherData;
+        weatherCache = (await response.json() as ApiResponse).data;
     }
     return weatherCache
 }

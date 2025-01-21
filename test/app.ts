@@ -3,7 +3,7 @@ import { expect } from "chai";
 import "mocha"
 
 import { API_URL } from '../src/controllers/service2Controller.js';
-import { WeatherData } from '../src/interfaces/weatherAPI.js';
+import { ApiResponse } from '../src/interfaces/weatherAPI.js';
 
 import app from '../src/app.js'
 import { Server } from 'http';
@@ -46,10 +46,11 @@ describe('End to End Testing', function () {
     });
   })
   describe("Service 2 Testing", function () {
-    it('should work to handle good and bad UENs', async () => {
+    it('should properly obtain the weather', async () => {
         const response = await fetch(API_URL);
         expect(response.ok).to.be.true
-        const weatherCache = (await response.json()) as WeatherData;
+        const weatherCacheRaw = (await response.json()) as ApiResponse;
+        const weatherCache = weatherCacheRaw.data
         const locationName = "Western Water Catchment"
         const forecast = weatherCache.items[0].forecasts.find((value => value.area == locationName))?.forecast
         if (forecast === undefined) {
